@@ -86,6 +86,65 @@ body {
   font-size: 15px;
 }
 
+.skin-select {
+  position: absolute;
+  top: 0;
+  right: 120px;
+  background: var(--toggle-bg);
+  border: 1px solid var(--toggle-border);
+  border-radius: 20px;
+  padding: 4px 10px;
+  font-size: 13px;
+  font-family: 'Courier New', Courier, monospace;
+  color: var(--toggle-text);
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: background 0.25s, color 0.25s, border-color 0.25s;
+}
+
+.skin-select:hover {
+  border-color: #7aa2f7;
+  color: #7aa2f7;
+}
+
+/* ---- Temas visuales ---- */
+body.skin-neon,
+body.skin-neon.light-mode {
+  --bg: #05050a;
+  --text: #e0e0ff;
+  --canvas-bg: #000000;
+  --border: #00e5ff;
+  --grid-line: rgba(0, 229, 255, 0.12);
+}
+
+body.skin-neon #board {
+  box-shadow: 0 0 24px rgba(0, 229, 255, 0.55);
+}
+
+body.skin-pastel {
+  --bg: #2a2638;
+  --canvas-bg: #332f45;
+  --border: #6f5f8f;
+}
+
+body.skin-pastel.light-mode {
+  --bg: #fdf6fb;
+  --canvas-bg: #fff8fc;
+  --border: #d8c8f0;
+}
+
+body.skin-pastel #board,
+body.skin-pastel #next-canvas {
+  border-radius: 14px;
+}
+
+body.skin-pixel #board,
+body.skin-pixel #next-canvas {
+  border-width: 3px;
+  border-radius: 0;
+  image-rendering: pixelated;
+}
+
 .game-title {
   font-family: 'Courier New', Courier, monospace;
   font-size: 36px;
