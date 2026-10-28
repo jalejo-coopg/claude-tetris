@@ -43,6 +43,11 @@ const overlay = document.getElementById('overlay');
 const overlayTitle = document.getElementById('overlay-title');
 const overlayScore = document.getElementById('overlay-score');
 const restartBtn = document.getElementById('restart-btn');
+const pauseMenu = document.getElementById('pause-menu');
+const pauseMain = document.getElementById('pause-main');
+const pauseKeys = document.getElementById('pause-keys');
+const pauseStartLevel = document.getElementById('pause-start-level');
+let startLevel = 1;
 
 let board, current, next, score, lines, level, paused, gameOver, lastTime, dropAccum, dropInterval, animId;
 let comboCount = 0;
@@ -336,7 +341,7 @@ function clearLines(wasTSpin) {
     }
 
     score += baseScore;
-    level = Math.floor(lines / 10) + 1;
+    level = startLevel + Math.floor(lines / 10);
     dropInterval = Math.max(100, 1000 - (level - 1) * 90);
   } else {
     // Dropped a piece without clearing lines: breaks combo!
@@ -548,20 +553,36 @@ function endGame() {
   animId = null;
   overlayTitle.textContent = 'GAME OVER';
   overlayScore.textContent = `Puntuación: ${score.toLocaleString()}`;
+  pauseMenu.classList.add('hidden');
+  restartBtn.classList.remove('hidden');
   overlay.classList.remove('hidden');
   draw();
+}
+
+function showPauseMain() {
+  pauseMain.classList.remove('hidden');
+  pauseKeys.classList.add('hidden');
+}
+
+function blurFocused() {
+  if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
 }
 
 function togglePause() {
   if (gameOver) return;
   paused = !paused;
   if (!paused) {
+    blurFocused();
+    overlay.classList.add('hidden');
     lastTime = performance.now();
     loop(lastTime);
   } else {
     cancelAnimationFrame(animId);
     overlayTitle.textContent = 'PAUSA';
     overlayScore.textContent = '';
+    restartBtn.classList.add('hidden');
+    showPauseMain();
+    pauseMenu.classList.remove('hidden');
     overlay.classList.remove('hidden');
   }
 }
@@ -592,7 +613,7 @@ function init() {
   board = createBoard();
   score = 0;
   lines = 0;
-  level = 1;
+  level = startLevel;
   comboCount = 0;
   b2bActive = false;
   lastMoveWasRotate = false;
@@ -602,7 +623,7 @@ function init() {
   shakeIntensity = 0;
   paused = false;
   gameOver = false;
-  dropInterval = 1000;
+  dropInterval = Math.max(100, 1000 - (level - 1) * 90);
   dropAccum = 0;
   lastTime = performance.now();
   next = randomPiece();
@@ -615,7 +636,8 @@ function init() {
 
 document.addEventListener('keydown', e => {
   initAudio();
-  if (e.code === 'KeyP') { togglePause(); return; }
+  if (e.code === 'KeyP' || e.code === 'Escape') { togglePause(); return; }
+  if (paused && (e.code === 'Space' || e.code === 'Enter')) { e.preventDefault(); return; }
   if (paused || gameOver) return;
   switch (e.code) {
     case 'ArrowLeft':
@@ -650,6 +672,25 @@ document.addEventListener('keydown', e => {
 restartBtn.addEventListener('click', () => {
   initAudio();
   init();
+});
+
+document.getElementById('pause-resume-btn').addEventListener('click', togglePause);
+
+document.getElementById('pause-restart-btn').addEventListener('click', () => {
+  initAudio();
+  init();
+  blurFocused();
+});
+
+document.getElementById('pause-controls-btn').addEventListener('click', () => {
+  pauseMain.classList.add('hidden');
+  pauseKeys.classList.remove('hidden');
+});
+
+document.getElementById('pause-keys-back').addEventListener('click', showPauseMain);
+
+pauseStartLevel.addEventListener('change', () => {
+  startLevel = Number(pauseStartLevel.value);
 });
 
 canvas.addEventListener('click', initAudio);
