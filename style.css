@@ -260,3 +260,125 @@ kbd {
 #restart-btn:hover {
   background: #9bbdff;
 }
+
+/* ---- Tabla de records ---- */
+.rec-section {
+  width: 100%;
+}
+
+.rec-stats {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 10px;
+  color: var(--controls-text);
+  margin-bottom: 4px;
+}
+
+.rec-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 10px;
+  color: var(--text);
+}
+
+.rec-table th {
+  color: var(--label);
+  font-weight: 600;
+  text-align: left;
+  padding: 2px 3px;
+  border-bottom: 1px solid var(--border);
+}
+
+.rec-table td {
+  padding: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.rec-table th:nth-child(1), .rec-table td:nth-child(1) { width: 16px; }
+.rec-table th:nth-child(4), .rec-table td:nth-child(4) { width: 26px; }
+.rec-table th:nth-child(5), .rec-table td:nth-child(5) { width: 36px; }
+
+.rec-own td {
+  color: #7aa2f7;
+  background: rgba(122, 162, 247, 0.2);
+  font-weight: 700;
+}
+
+body.light-mode .rec-own td {
+  color: #2a4fa8;
+  background: rgba(42, 79, 168, 0.15);
+}
+
+.rec-empty {
+  font-size: 11px;
+  color: var(--controls-text);
+}
+
+.rec-reset {
+  margin-top: 8px;
+  width: 100%;
+  background: var(--toggle-bg);
+  border: 1px solid var(--toggle-border);
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 11px;
+  font-family: 'Courier New', Courier, monospace;
+  color: var(--toggle-text);
+  cursor: pointer;
+  letter-spacing: 1px;
+}
+
+.rec-reset:hover {
+  border-color: #7aa2f7;
+  color: #7aa2f7;
+}
+
+/* ---- Records en game over ---- */
+.rec-overlay {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 260px;
+}
+
+.rec-overlay .rec-table {
+  font-size: 12px;
+}
+
+.rec-form {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+}
+
+#record-name {
+  width: 150px;
+  background: var(--kbd-bg);
+  border: 1px solid var(--kbd-border);
+  border-radius: 6px;
+  padding: 6px 8px;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.rec-form button {
+  background: #7aa2f7;
+  color: #0f0f17;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.rec-form button:hover {
+  background: #9bbdff;
+}
